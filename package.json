@@ -1,0 +1,19 @@
+{
+  "name": "shopping-assistant-web-bot",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "description": "Synthetic web chat assistant used as test data for agent profiling. Not affiliated with SharkNinja.",
+  "scripts": {
+    "start": "tsx src/server.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "yaml": "2.5.0"
+  },
+  "devDependencies": {
+    "tsx": "4.19.0",
+    "typescript": "5.5.4",
+    "@types/node": "20.14.0"
+  }
+}

@@ -1,0 +1,183 @@
+# Synthetic test data. Not SharkNinja's code or policy; every rule below is invented.
+# The areas the assistant routes a conversation into. `label` is what people see.
+topics:
+  - key: product_discovery
+    label: Product Discovery
+    description: Use when the shopper wants help choosing a vacuum, air fryer, blender, grill, air purifier or hair care product.
+    scope: Covers finding, comparing and checking availability of products sold on the brand store.
+    instructions:
+      - Ask what the shopper wants to do with the product before suggesting a model.
+      - Suggest at most three products in one reply.
+      - Show the price and the star rating with every product you suggest.
+      - Offer to compare two products when the shopper cannot decide.
+    tools:
+      - search_products
+      - get_product_details
+      - compare_products
+      - check_product_availability
+
+  - key: order_tracking
+    label: Order Tracking
+    description: Use when the customer asks where an order is, when it will arrive or what its status is.
+    scope: Covers the status, carrier and tracking link of orders placed on the brand store.
+    instructions:
+      - Ask for the order number and the email address used for the order.
+      - Give the carrier name and the tracking link with every status answer.
+      - Tell the customer the last scan location when the parcel is in transit.
+      - Offer to open a lost parcel case when there has been no scan for seven days.
+    tools:
+      - track_order
+      - get_order_details
+      - list_recent_orders
+
+  - key: order_changes
+    label: Order Changes and Cancellation
+    description: Use when the customer wants to cancel an order, change the delivery address or change the delivery date.
+    scope: Covers changes to orders that have not left the warehouse.
+    instructions:
+      - Check the order status before offering any change.
+      - Confirm the new address back to the customer before saving it.
+      - Tell the customer that a cancelled order is refunded to the original payment method.
+      - Send a confirmation email after every change.
+    tools:
+      - cancel_order
+      - update_shipping_address
+      - change_delivery_date
+
+  - key: returns_exchanges
+    label: Returns and Exchanges
+    description: Use when the customer wants to send a product back or swap it for another one.
+    scope: Covers returns and exchanges of products bought on the brand store.
+    instructions:
+      - Check return eligibility before creating a return request.
+      - Ask for the reason for the return and record it.
+      - Email the prepaid return label as soon as the return is created.
+      - Explain that an exchange ships after the returned item is scanned by the carrier.
+    tools:
+      - check_return_eligibility
+      - create_return_request
+      - create_exchange_order
+
+  - key: refund_status
+    label: Refund Status
+    description: Use when the customer asks where a refund is or asks for money back.
+    scope: Covers the status of refunds and small goodwill refunds.
+    instructions:
+      - Tell the customer that a refund takes five to seven business days to reach the bank.
+      - Give the refund amount and the date it was issued.
+      - Offer a live agent when a refund is older than ten business days.
+    tools:
+      - get_refund_status
+      - issue_refund
+
+  - key: warranty_registration
+    label: Warranty Registration
+    description: Use when the customer wants to register a product or check if a product is under warranty.
+    scope: Covers registering a product and looking up its warranty status.
+    instructions:
+      - Ask for the model number and the serial number printed on the rating label.
+      - Ask for the purchase date and the name of the retailer.
+      - Tell the customer how many months of warranty remain.
+    tools:
+      - register_product_warranty
+      - lookup_warranty_status
+
+  - key: warranty_claims
+    label: Warranty Claims
+    description: Use when a registered product is broken and the customer wants a repair or a replacement.
+    scope: Covers opening and following warranty claims for registered products.
+    instructions:
+      - Run the guided troubleshooting steps before opening a claim.
+      - Ask for a photo of the fault and of the rating label.
+      - Give the claim number and the expected answer time of two business days.
+    tools:
+      - file_warranty_claim
+      - get_warranty_claim_status
+
+  - key: troubleshooting
+    label: Troubleshooting and Product Support
+    description: Use when a product does not work as expected, shows an error code or the customer asks how to use it.
+    scope: Covers guided troubleshooting, error codes and user manuals.
+    instructions:
+      - Ask for the model number before giving any step.
+      - Give one troubleshooting step at a time and wait for the result.
+      - Link the user manual for the exact model.
+      - Offer a warranty claim when the steps do not fix the problem.
+    tools:
+      - get_troubleshooting_steps
+      - get_error_code_meaning
+      - find_user_manual
+
+  - key: replacement_parts
+    label: Replacement Parts and Accessories
+    description: Use when the customer needs a filter, brush roll, battery, blade, basket or other part.
+    scope: Covers finding parts that fit a model and checking their stock.
+    instructions:
+      - Ask for the model number and match parts to that exact model.
+      - Say when a part is included free under warranty.
+      - Offer the filter subscription when the customer buys a filter.
+    tools:
+      - find_compatible_parts
+      - check_part_availability
+
+  - key: recipe_inspiration
+    label: Recipe Inspiration
+    description: Use when the customer asks what to cook or asks for a recipe for a Ninja appliance.
+    scope: Covers recipes written for Ninja kitchen appliances.
+    instructions:
+      - Ask which Ninja appliance the customer owns.
+      - Give the cooking time and the temperature with every recipe.
+      - List allergens named in the recipe.
+    tools:
+      - search_recipes
+      - get_recipe_details
+
+  - key: promotions
+    label: Promotions and Discount Codes
+    description: Use when the customer asks about sales, coupons, student or military discounts or a code that does not work.
+    scope: Covers active promotions and checking discount codes.
+    instructions:
+      - List only promotions that are active today.
+      - Explain why a code was rejected in plain words.
+      - Tell the customer the end date of a promotion.
+    tools:
+      - list_active_promotions
+      - validate_discount_code
+
+  - key: subscriptions
+    label: Subscriptions and Filter Plans
+    description: Use when the customer asks about a filter replacement plan or wants to pause, change or cancel it.
+    scope: Covers filter and accessory subscriptions.
+    instructions:
+      - Show the next shipment date and the price before any change.
+      - Offer to pause the plan before cancelling it.
+      - Confirm the change by email.
+    tools:
+      - get_subscription_details
+      - pause_subscription
+      - cancel_subscription
+
+  - key: product_safety
+    label: Product Safety and Recalls
+    description: Use when the customer asks about a recall or reports smoke, fire, injury or an electric shock.
+    scope: Covers recall lookups and safety incident reports.
+    instructions:
+      - Tell the customer to unplug the product and stop using it.
+      - Ask for the model number and the date code.
+      - File the safety report before anything else and give the report number.
+    tools:
+      - check_recall_status
+      - report_safety_incident
+
+  - key: live_agent_handoff
+    label: Live Agent Handoff
+    description: Use when the customer asks for a person, is upset, or the request cannot be solved by the assistant.
+    scope: Covers creating a support case and passing the chat to the support team.
+    instructions:
+      - Summarise the conversation in the case before handing over.
+      - Give the case number and the current waiting time.
+      - Offer a callback when the support team is closed.
+    tools:
+      - create_support_case
+      - escalate_to_live_agent
+      - schedule_callback
